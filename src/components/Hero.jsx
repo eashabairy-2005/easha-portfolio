@@ -3,7 +3,7 @@ import tiktok from "../assets/tiktok.png";
 import github from "../assets/github.png";
 import youtube from "../assets/youtube.png";
 import hero from "../assets/hero.png";
-import CV from "../assets/CV.pdf";
+import CV from "../assets/cv.pdf";
 
 import { DownloadIcon, Mail } from "lucide-react";
 import { motion } from "framer-motion";
