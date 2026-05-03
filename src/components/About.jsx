@@ -107,7 +107,7 @@ const About = ({ darkMode }) => {
             {[
               { num: "2+", label: "Years Learning" },
               { num: "6+", label: "Projects" },
-              { num: "5+", label: "Technologies" },
+              { num: "5+", label: "Seminars" },
             ].map((item, i) => (
               <motion.div
                 key={i}
