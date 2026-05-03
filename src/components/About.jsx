@@ -21,7 +21,9 @@ const About = ({ darkMode }) => {
         >
 
           {/* glow */}
-          <div className="absolute w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] bg-gradient-to-r from-orange-500 to-yellow-400 blur-3xl opacity-30 rounded-full"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] bg-gradient-to-r from-orange-500 to-yellow-400 blur-3xl opacity-30 rounded-full"></div>
+          </div>
 
           {/* image box */}
           <motion.div
@@ -31,10 +33,10 @@ const About = ({ darkMode }) => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-400 rounded-3xl rotate-6"></div>
 
-            {/* floating animation */}
+            {/* floating image */}
             <motion.img
               src={about}
-              alt="About"
+              alt="Easha Bairy profile"
               className="relative w-full h-full object-cover rounded-3xl shadow-2xl border-4 border-white/20"
               animate={{ y: [0, -10, 0] }}
               transition={{
@@ -81,30 +83,39 @@ const About = ({ darkMode }) => {
             transition={{ delay: 0.3 }}
             viewport={{ once: true }}
           >
-            I am <b>Easha Bairy</b>, a passionate web developer currently pursuing
-            B.Sc. Computer Science (Hons.). I love building modern, responsive,
-            and interactive web applications using React, Tailwind CSS, and
-            modern UI tools. My goal is to become a full-stack developer and
-            build impactful digital products.
+            I am <span className="font-bold">Easha Bairy</span> currently studying B.Sc. Computer Science (Hons.) at Midnapore College (Autonomous).  
+            I am passionate about web development and enjoy building creative and functional web applications.  
+            I love building modern, responsive and interactive web applications using React, Tailwind CSS, and modern UI tools.  
+            My goal is to become a full-stack developer and build impactful digital products.
           </motion.div>
 
           {/* STATS */}
           <motion.div
             className="grid grid-cols-3 gap-4 mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ staggerChildren: 0.2 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.2,
+                },
+              },
+            }}
           >
-
             {[
-              { num: "1+", label: "Years Learning" },
-              { num: "10+", label: "Projects" },
+              { num: "2+", label: "Years Learning" },
+              { num: "6+", label: "Projects" },
               { num: "5+", label: "Technologies" },
             ].map((item, i) => (
               <motion.div
                 key={i}
                 className="p-4 rounded-xl text-center bg-gradient-to-br from-orange-500/10 to-orange-500/5 border border-orange-500/20"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
                 whileHover={{ scale: 1.05 }}
               >
                 <h2 className="text-2xl font-bold text-orange-400">
@@ -113,7 +124,6 @@ const About = ({ darkMode }) => {
                 <p className="text-sm">{item.label}</p>
               </motion.div>
             ))}
-
           </motion.div>
 
           {/* BUTTONS */}

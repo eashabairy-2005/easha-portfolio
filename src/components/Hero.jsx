@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import instagram from "../assets/instagram.png";
 import tiktok from "../assets/tiktok.png";
 import github from "../assets/github.png";
@@ -9,6 +11,47 @@ import { DownloadIcon, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Hero = ({ darkMode }) => {
+
+  // 🔥 Typing animation text
+  const texts = [
+    "React Developer",
+    "UI Designer",
+    "Frontend Developer",
+  ];
+
+  const [textIndex, setTextIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentText = texts[textIndex];
+    let timeout;
+
+    if (!isDeleting && charIndex <= currentText.length) {
+      timeout = setTimeout(() => {
+        setDisplayText(currentText.substring(0, charIndex));
+        setCharIndex((prev) => prev + 1);
+      }, 120);
+    } 
+    else if (isDeleting && charIndex >= 0) {
+      timeout = setTimeout(() => {
+        setDisplayText(currentText.substring(0, charIndex));
+        setCharIndex((prev) => prev - 1);
+      }, 60);
+    } 
+    else if (!isDeleting && charIndex > currentText.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 1000);
+    } 
+    else if (isDeleting && charIndex < 0) {
+      setIsDeleting(false);
+      setTextIndex((prev) => (prev + 1) % texts.length);
+      setCharIndex(0);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, textIndex]);
+
   const socialIcons = [
     { icon: instagram, alt: "Instagram" },
     { icon: tiktok, alt: "TikTok" },
@@ -57,13 +100,16 @@ const Hero = ({ darkMode }) => {
             Hi, I'm Easha Bairy
           </motion.h1>
 
-          {/* TEXT */}
+          {/* ✨ TYPING TEXT */}
           <motion.p
-            className="mb-6 max-w-lg"
+            className="mb-6 max-w-lg text-lg font-medium"
             style={{ color: darkMode ? "#d1d5db" : "#374151" }}
           >
-            React Developer, UI Designer and Frontend Developer.
-            I create responsive modern websites with beautiful UI.
+            I am a{" "}
+            <span className="text-orange-500 font-semibold">
+              {displayText}
+            </span>
+            <span className="animate-pulse">|</span>
           </motion.p>
 
           {/* BUTTONS */}
@@ -99,13 +145,30 @@ const Hero = ({ darkMode }) => {
           className="lg:w-1/2 w-full flex justify-center"
           initial={{ opacity: 0, x: 80 }}
           animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <motion.img
-            src={hero}
-            alt="hero"
-            className="max-w-[350px] lg:max-w-[500px] w-full"
-            whileHover={{ scale: 1.05 }}
-          />
+          <div className="relative flex justify-center items-center">
+
+            {/* Glow background */}
+            <div className="absolute w-[280px] h-[280px] lg:w-[350px] lg:h-[350px] bg-orange-500 blur-3xl opacity-30 rounded-full"></div>
+
+            {/* Hero image with animation */}
+            <motion.img
+              src={hero}
+              alt="hero"
+              className="relative z-10 max-w-[350px] lg:max-w-[500px] w-full"
+              animate={{
+                y: [0, -15, 0],
+                rotate: [-1, 1, -1],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              whileHover={{ scale: 1.08 }}
+            />
+          </div>
         </motion.div>
 
       </div>
